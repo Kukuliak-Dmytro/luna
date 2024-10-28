@@ -1,8 +1,9 @@
 import React from 'react';
+import styles from './login.module.css';
 const LoginPage = () => {
   return (
-    <div>
-      <h1>Welcome to the Login Page</h1>
+    <div className={styles.loginWrapper}>
+      <p>Login page</p>
     </div>
   );
 };
