@@ -192,12 +192,13 @@
                     .miscLink{
                         text-decoration: none;
                         color: var(--primary--color);
+                        cursor: pointer;
                         &:hover{
                             text-decoration: underline;
                         }
                     }
                 }
-                .noShopify{
+                .no{
                    cursor: pointer;
                    display: flex;
                    justify-content: center;
@@ -206,6 +207,9 @@
                    &:hover{
                        text-decoration: underline;
                    }
+                }
+                .connectGmail{
+                    background-color: red;
                 }
             }
         }
