@@ -10,8 +10,8 @@ interface InputSelectProps {
 const InputSelect: React.FC<InputSelectProps> = ({ label, options,id,onChange }) => {
     return (
         <div className={styles.selectWrapper}>
-            <label htmlFor={id}>{label}</label>
-            <select id={id} onChange={onChange}>
+            <label htmlFor={id} className={styles.label}>{label}</label>
+            <select id={id} onChange={onChange} className={styles.select}>
                 {options.map((option, index) => (
                     <option key={index} value={option.value}>
                         {option.name}

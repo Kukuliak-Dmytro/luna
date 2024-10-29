@@ -173,8 +173,6 @@
 
                 .title {
                     font-size: 24px;
-                    display: flex;
-                    align-items: center;
                     font-weight: 600;
                     color: var(--text--primary);
                     padding-bottom: 16px;
@@ -183,20 +181,31 @@
                     font-size: 14px;
                     font-weight: 400;
                     color: var(--text--secondary);
+                    padding-bottom: 32px;
                 }
-                .login{
+                .misc{
                     padding-top: 24px;
                     display: flex;
                     justify-content: center;
                     gap: 5px;
                     color: var(--text--secondary);
-                    .loginLink{
+                    .miscLink{
                         text-decoration: none;
                         color: var(--primary--color);
                         &:hover{
                             text-decoration: underline;
                         }
                     }
+                }
+                .noShopify{
+                   cursor: pointer;
+                   display: flex;
+                   justify-content: center;
+                   padding-top: 16px;
+                   color: var(--text--secondary);
+                   &:hover{
+                       text-decoration: underline;
+                   }
                 }
             }
         }
