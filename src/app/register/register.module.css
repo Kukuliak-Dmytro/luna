@@ -13,14 +13,14 @@
 
         .progressIndicator {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-evenly;
             width: 40%;
             height: 100%;
             background-image: linear-gradient(to top, #0D3251, #19476C);
 
             .stepsAndButtons {
-                padding-top: 100px;
-
                 .stepsWrapper {
                     display: flex;
                     gap: 5px;
@@ -34,36 +34,32 @@
                             width: 32px;
                             height: 32px;
                             border-radius: 50%;
-                            border: 2px solid #5D7FA3;
-
+                            border: 2px solid var(--text--quaternary);
                         }
 
                         .stepActive {
                             width: 32px;
                             height: 32px;
                             border-radius: 50%;
-                            border: 2px solid #32ABF2;
+                            border: 2px solid var(--text--quinary);
                         }
                         
-                        .stepCompleted{
+                        .stepCompleted {
                             width: 32px;
                             height: 32px;
                             background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='32' height='32' rx='16' fill='%2332ABF2'/%3E%3Cpath d='M21.3334 12L14.0001 19.3333L10.6667 16' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
-                            
                         }
 
                         .connectorInactive {
                             height: 48px;
                             width: 0px;
-                            border: 1px solid #5D7FA3;
-
+                            border: 1px solid var(--text--quaternary);
                         }
 
                         .connectorActive {
                             height: 48px;
                             width: 0px;
-                            border: 1px solid #32ABF2;
-
+                            border: 1px solid var(--text--quinary);
                         }
                     }
                 }
@@ -72,7 +68,7 @@
                     .stepsList {
                         list-style: none;
                         font-size: 16px;
-                        color: #5D7FA3;
+                        color: var(--text--quaternary);
                         font-weight: 400;
 
                         .listItemInactive {
@@ -88,47 +84,121 @@
                             align-items: center;
                             margin-bottom: 48px;
                             color: #fff;
-
                         }
                     }
                 }
 
-                .buttonsWrapper{
+                .buttonsWrapper {
                     display: flex;
                     justify-content: space-between;
-                    .btnPrev,.btnNext{
+                    .btnPrev, .btnNext {
                         padding: 6px 12px;
-                        background-color: #134267;
+                        background-color: var(--text--primary);
                         color: #93A8C1;
                         border: none;
                         cursor: pointer;
-                        transition: all 0.3s ease;
+                        transition: var(--transition);
                         border-radius: 4px;
                         
-                        &:hover{
+                        &:hover {
                             color: white;
                             scale: 1.05;
                         }
-                        &:active{
+                        &:active {
                             scale: 0.95;
                         }
-                        &.disabled{
+                        &.disabled {
                             cursor: auto;
-                            opacity: 0.8;
-                            &:hover{
-                                color: #93A8C1;
+                            opacity: 0.6;
+                            &:hover {
+                                color: var(--text--quaternary);
                                 scale: 1;
                             }
                         }
                     }
                 }
             }
+            .onboardingStats {
+                max-width: 300px;
+                .stats {
+                    display: flex;
+                    align-items: center;
+                    color: var(--text--quinary);
+                    background-color: var(--text--primary);
+                    border-radius: 8px;
+                    padding: 16px;
+                    gap: 16px;
+                    .stat1 {
+                        font-size: 32px;
+                    }
+                    .stat2 {
+                        font-size: 14px;
+                    }
+                }
+                .dots {
+                    display: flex;
+                    justify-content: center;
+                    gap: 12px;
+                    padding-top: 16px;
+                    .dotActive {
+                        width: 8px;
+                        height: 8px;
+                        border-radius: 50%;
+                        background-color: var(--text--quinary);
+                    }
+                    .dotInactive {
+                        width: 8px;
+                        height: 8px;
+                        border-radius: 50%;
+                        background-color: var(--text--primary);
+                    }
+                }
+            }
         }
 
-        .formContainer {
+        .formWrapper {
             background-image: url("../../../public/formBackground.png");
             background-size: contain;
             width: 60%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .formContainer {
+                width: 400px;
+                min-height: 50%;
+                background-color: white;
+                padding: 40px;
+                border-radius: 8px;
+                box-shadow: 0px 5px 20px 0px #6C758B33;
+
+                .title {
+                    font-size: 24px;
+                    display: flex;
+                    align-items: center;
+                    font-weight: 600;
+                    color: var(--text--primary);
+                    padding-bottom: 16px;
+                }
+                .welcome {
+                    font-size: 14px;
+                    font-weight: 400;
+                    color: var(--text--secondary);
+                }
+                .login{
+                    padding-top: 24px;
+                    display: flex;
+                    justify-content: center;
+                    gap: 5px;
+                    color: var(--text--secondary);
+                    .loginLink{
+                        text-decoration: none;
+                        color: var(--primary--color);
+                        &:hover{
+                            text-decoration: underline;
+                        }
+                    }
+                }
+            }
         }
     }
 }
