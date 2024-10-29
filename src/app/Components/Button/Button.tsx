@@ -5,11 +5,12 @@ interface ButtonProps {
     width?: string;
     height?: string;
     children: React.ReactNode;
+    onclick?: () => void;
 }
 
-const Button: React.FC<ButtonProps> = ({ width, height, children }) => {
+const Button: React.FC<ButtonProps> = ({ width, height, children,onclick }) => {
     return (
-        <button style={{ width, height }} className={styles.btnPrimary}>
+        <button style={{ width, height }} className={styles.btnPrimary} onClick={onclick}>
             {children}
         </button>
     );
