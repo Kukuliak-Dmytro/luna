@@ -3,7 +3,7 @@ import styles from  './InputSelect.module.css';
 
 interface InputSelectProps {
     label: string|number;
-    options: {name:string,value:string|number}[];
+    options: {name:string,value:number|string}[];
     id?: string;
     onChange?: (event: any) => void;
 }

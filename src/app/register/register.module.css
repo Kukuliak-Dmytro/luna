@@ -209,7 +209,39 @@
                    }
                 }
                 .connectGmail{
-                    background-color: red;
+                    height: 50px;
+                    width: 100%;
+                    background-color: #5383EC;
+                    border: none;
+                    border-radius: 2px;
+                    color: white;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 1px;
+                    cursor: pointer;
+                    transition: var(--transition);
+                    &:hover{
+                        scale: 1.05;
+                    }
+                    &:active{
+                        scale: 0.95;
+                    }
+                    .googleLogo{
+                        background-color: white;
+                        width: 48px;
+                        height: 48px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                    .googleText{
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        width: calc(100% - 50px);
+                        font-size: 14px;
+                    }
                 }
             }
         }

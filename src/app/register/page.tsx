@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './register.module.css';
 import InputText from '../Components/InputText/InputText';
 import InputPassword from '../Components/InputPassword/InputPassword';
@@ -11,14 +11,22 @@ import Image from 'next/image';
 import MockRequest from '../Components/MockRequest/MockRequest';
 import Benefit from '../Components/Benefit/Benefit';
 
+
 const RegisterPage = () => {
   const [step, setStep] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [iUseGmail, setiUseGmail] = useState(true);
+  const [iUseShopify, setIUseShopify] = useState(true);
   const [isStoreConnected, setIsStoreConnected] = useState(false);
-  const [isGmailConnected, setIsGmailConnected] = useState(false);
-
+  const [isEmailConnected, setisEmailConnected] = useState(false);
+  const [isBackButtonEnabled, setIsBackButtonEnabled] = useState(false);
+  const [isNextButtonEnabled, setIsNextButtonEnabled] = useState(false);
   const nextStep = () => {
-    setStep(prevStep => (prevStep < 3 ? prevStep + 1 : prevStep));
+    if (step < 3) {
+      setStep(prevStep => prevStep + 1);
+    } else {
+      window.location.href = '/';
+    }
   };
 
   const prevStep = () => {
@@ -69,7 +77,7 @@ const RegisterPage = () => {
       if (popup.closed) {
         clearInterval(checkPopupClosed);
         stopLoading();
-        setIsGmailConnected(true);
+        setisEmailConnected(true);
         window.removeEventListener('message', messageListener);
       }
     }, 500);
@@ -110,8 +118,8 @@ const RegisterPage = () => {
           <div className={styles.buttonsWrapper}>
             {step > 0 && (
               <>
-                <button onClick={prevStep} className={`${styles.btnPrev} ${step === 1 ? styles.disabled : ''}`} disabled={step === 1}>&#129168; Back</button>
-                <button onClick={nextStep} className={`${styles.btnNext} ${step === steps.length - 1 ? styles.disabled : ''}`} disabled={step === steps.length - 1}>Next &#129170;</button>
+                <button onClick={prevStep} className={`${styles.btnPrev} ${step === 1 ? styles.disabled : ''}`} disabled={!isBackButtonEnabled}>&#129168; Back</button>
+                <button onClick={nextStep} className={`${styles.btnNext} ${step === steps.length ? styles.disabled : ''}`} disabled={!isNextButtonEnabled}>Next &#129170;</button>
               </>
             )}
           </div>
@@ -144,12 +152,11 @@ const RegisterPage = () => {
       event.preventDefault();
       console.log("Form submitted:", formState);
       setLoading(true);
-
       // Simulate a server request
       setTimeout(() => {
         setLoading(false);
         nextStep();
-      }, 1000); // Simulate a 1-second server request
+      }, 1000);
     };
 
     return (
@@ -171,18 +178,25 @@ const RegisterPage = () => {
     );
   };
   const Step1 = () => {
-    const [iUseShopify, setIUseShopify] = useState(true);
     const [platform, setPlatform] = useFormState({ platformId: 1 });
-    const [isPlatformSet, setIsPlatformSet] = useState(false);
     const handleConnectToShopify = () => {
       setLoading(true);
       handleConnectShopify('Shopify', () => setLoading(false));
-
+      setPlatform({ target: { platformId: '[connected-shopify-account]' } });
+      console.log('Shopify connected:', platform);
     }
+    useEffect(() => {
+      if (iUseShopify === true && isStoreConnected === true) {
+        setIsNextButtonEnabled(true);
+      } else {
+        setIsNextButtonEnabled(false);
+      }
+    }, [iUseShopify, isStoreConnected]);
+
     if (loading) {
       return <MockRequest />;
     }
-    if (iUseShopify === true && isStoreConnected === true) {
+    else if (iUseShopify === true && isStoreConnected === true) {
       return (
         <div className={styles.formContainer} style={{ textAlign: "center" }}>
           <Image src='/store.svg' alt='logo' width={90} height={90}></Image>
@@ -191,11 +205,11 @@ const RegisterPage = () => {
           <div className={styles.welcome}>Chad is now able to manage customer support requests for [STORE-NAME].</div>
           <Button onclick={() => nextStep()}>Continue</Button>
 
-          <span className={styles.misc}>Not your store? <a onClick={()=>setIsStoreConnected(false)} className={styles.miscLink}>Connect another one</a></span>
+          <span className={styles.misc}>Not your store? <a onClick={() => setIsStoreConnected(false)} className={styles.miscLink}>Connect another one</a></span>
         </div>
       );
     }
-    if (iUseShopify === true) {
+    else if (iUseShopify === true && isStoreConnected === false) {
       return (
         <div className={styles.formContainer}>
           <div className={styles.title}>
@@ -216,7 +230,7 @@ const RegisterPage = () => {
         </div>
       );
     }
-    else if (iUseShopify === false && isPlatformSet === false) {
+    else if (iUseShopify === false && isStoreConnected === false) {
       return (
         <div className={styles.formContainer}>
           <div className={styles.title}>
@@ -231,7 +245,14 @@ const RegisterPage = () => {
             action=""
             onSubmit={(event: any) => {
               event.preventDefault();
-              setIsPlatformSet(true)
+              setIsStoreConnected(true);
+              console.log("Form sent:", platform);
+              setLoading(true);
+
+              // Simulate a server request
+              setTimeout(() => {
+                setLoading(false);
+              }, 1000); // Simulate a 1-second server request
             }}
           >
             <InputSelect
@@ -246,15 +267,16 @@ const RegisterPage = () => {
               id='platformId'
             ></InputSelect>
             <Button>Submit</Button>
-            <span className={styles.misc}>Actually use Shopify? <a onClick={()=>setIUseShopify(true)} className={styles.miscLink}>Connect</a></span>
+            <span className={styles.misc}>Actually use Shopify? <a onClick={() => setIUseShopify(true)} className={styles.miscLink}>Connect</a></span>
           </form>
         </div>
       );
-    } else if (iUseShopify === false && isPlatformSet === true) {
+    }
+    else if (iUseShopify === false && isStoreConnected === true) {
+
       return (
         <div className={styles.formContainer} style={{ textAlign: "center" }}>
-         
-
+          <Image src='/checkmark.svg' alt='logo' width={160} height={160}></Image>
           <div className={styles.title}>Response received</div>
           <div className={styles.welcome}>Thank you for your interest in Chad! We’ll be hard at work building integrations to support your platform.</div>
           <Button onclick={() => nextStep()}>Done</Button>
@@ -263,32 +285,37 @@ const RegisterPage = () => {
     }
   };
   const Step2 = () => {
-    const [iUseGmail, setiUseGmail] = useState(true);
-    const [email, setemail] = useFormState({ emailId: 1 });
-    const [isemailSet, setIsemailSet] = useState(false);
+    const [email, setEmail] = useFormState({ emailId: 1 });
     const handleConnectToGmail = () => {
       setLoading(true);
       handleConnectGmail('Gmail', () => setLoading(false));
-
+      setEmail({ target: { platformId: '[connected-email-account]' } });
+      console.log('GMail connected:', email);
     }
+    useEffect(() => {
+      setIsBackButtonEnabled(true);
+      if (iUseGmail === true && isEmailConnected === true) {
+        setIsNextButtonEnabled(true);
+      } else {
+        setIsNextButtonEnabled(false);
+      }
+    }, [iUseGmail, isEmailConnected]);
     if (loading) {
       return <MockRequest />;
     }
-    if (iUseGmail === true && isGmailConnected === true) {
+    else if (iUseGmail === true && isEmailConnected === true) {
       return (
         <div className={styles.formContainer} style={{ textAlign: "center" }}>
-          
-
-
+          <Image src='/checkmark.svg' alt='logo' width={160} height={160}></Image>
           <div className={styles.title}>Gmail connected</div>
           <div className={styles.welcome}>Chad is now able to manage customer support requests for [STORE-NAME].</div>
           <Button onclick={() => nextStep()}>Continue</Button>
 
-          <span className={styles.misc}>Not your store? <a onClick={()=>setIsGmailConnected(false)} className={styles.miscLink}>Connect another one</a></span>
+          <span className={styles.misc}>Not your Gmail account? <a onClick={() => setisEmailConnected(false)} className={styles.miscLink}>Connect another one</a></span>
         </div>
       );
     }
-    if (iUseGmail === true) {
+    else if (iUseGmail === true && isEmailConnected === false) {
       return (
         <div className={styles.formContainer}>
           <div className={styles.title}>
@@ -297,19 +324,37 @@ const RegisterPage = () => {
           </div>
           <div className={styles.title}>Connect your customer support email </div>
           <div className={styles.welcome}>
-          Allows Chad to send automated responses on your behalf from your usual support mailbox  
+            Allows Chad to send automated responses on your behalf from your usual support mailbox
           </div>
           <div className={styles.benefitsWrapper}>
             <Benefit title='Contextual responses' description='Custom responses to any support situation from “where’s my stuff?” to “I want a refund”'></Benefit>
             <Benefit title='Reply from anywhere' description='Respond to your customers via email or Chad chat—it’s all saved in the same thread'></Benefit>
             <Benefit title='Categorical inbox tags' description='Automatically checks your store policy and existing inventory before resolving or escalating each request'></Benefit>
           </div>
-          <Button onclick={() => handleConnectToGmail()}>Connect Gmail account</Button>
+
+          <button onClick={() => handleConnectToGmail()} className={styles.connectGmail}>
+            <span className={styles.googleLogo}>
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g clip-path="url(#clip0_2499_50436)">
+                <path d="M17.8246 9.20731C17.8246 8.59552 17.775 7.98041 17.6691 7.37854H9.18005V10.8443H14.0414C13.8396 11.962 13.1915 12.9508 12.2423 13.5792V15.8279H15.1426C16.8457 14.2604 17.8246 11.9455 17.8246 9.20731Z" fill="#4285F4" />
+                <path d="M9.17995 18.0006C11.6073 18.0006 13.6543 17.2036 15.1458 15.8279L12.2455 13.5792C11.4386 14.1281 10.3969 14.439 9.18326 14.439C6.83529 14.439 4.84448 12.8549 4.13016 10.7252H1.13733V13.0434C2.66516 16.0826 5.77705 18.0006 9.17995 18.0006V18.0006Z" fill="#34A853" />
+                <path d="M4.12696 10.7252C3.74996 9.60739 3.74996 8.39703 4.12696 7.27927V4.96106H1.13743C-0.139072 7.50414 -0.139072 10.5003 1.13743 13.0434L4.12696 10.7252V10.7252Z" fill="#FBBC04" />
+                <path d="M9.17995 3.56225C10.4631 3.5424 11.7032 4.02523 12.6325 4.9115L15.202 2.34196C13.575 0.814129 11.4155 -0.0258495 9.17995 0.000606499C5.77705 0.000606499 2.66516 1.91867 1.13733 4.96111L4.12686 7.27931C4.83786 5.1463 6.83198 3.56225 9.17995 3.56225V3.56225Z" fill="#EA4335" />
+              </g>
+              <defs>
+                <clipPath id="clip0_2499_50436">
+                  <rect width="18" height="18" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
+            </span>
+            <span className={styles.googleText}>Connect Gmail account</span>
+          </button>
           <a onClick={() => setiUseGmail(false)} className={styles.no}>I don't use Gmail</a>
         </div>
       );
     }
-    else if (iUseGmail === false && isemailSet === false) {
+    else if (iUseGmail === false && isEmailConnected === false) {
       return (
         <div className={styles.formContainer}>
           <div className={styles.title}>
@@ -318,13 +363,20 @@ const RegisterPage = () => {
           </div>
           <div className={styles.title}>Don’t use Gmail?</div>
           <div className={styles.welcome}>
-          Chad Beta is currently only integrated with Gmail. We’ll send you an email when Chad becomes compatible with your support ticket platform.
+            Chad Beta is currently only integrated with Gmail. We’ll send you an email when Chad becomes compatible with your support ticket platform.
           </div>
           <form
             action=""
             onSubmit={(event: any) => {
               event.preventDefault();
-              setIsemailSet(true)
+              setisEmailConnected(true);
+              console.log("Form sent:", email);
+              setLoading(true);
+
+              // Simulate a server request
+              setTimeout(() => {
+                setLoading(false);
+              }, 1000);
             }}
           >
             <InputSelect
@@ -335,19 +387,20 @@ const RegisterPage = () => {
                 { name: "email 4", value: 4 }
               ]}
               label="Platform"
-              onChange={setemail}
+              onChange={setEmail}
               id='emailId'
             ></InputSelect>
             <Button>Submit</Button>
-            <span className={styles.misc}>Actually use Gmail? <a onClick={()=>setiUseGmail(true)} className={styles.miscLink}>Connect</a></span>
+            <span className={styles.misc}>Actually use Gmail? <a onClick={() => setiUseGmail(true)} className={styles.miscLink}>Connect</a></span>
           </form>
         </div>
       );
-    } else if (iUseGmail === false && isemailSet === true) {
+    }
+    else if (iUseGmail === false && isEmailConnected === true) {
       return (
         <div className={styles.formContainer} style={{ textAlign: "center" }}>
-         
-         <Image src='/checkmark.svg' alt='logo' width={160} height={160}></Image>
+
+          <Image src='/checkmark.svg' alt='logo' width={160} height={160}></Image>
           <div className={styles.title}>Response received</div>
           <div className={styles.welcome}>Thank you for your interest in Chad! We’ll be hard at work building integrations to support your email client.</div>
           <Button onclick={() => nextStep()}>Done</Button>
@@ -355,6 +408,25 @@ const RegisterPage = () => {
       );
     }
   };
+  const Step3 = () => {
+    useEffect(() => {
+      setIsNextButtonEnabled(true);
+      setIsBackButtonEnabled(true);
+    }, []);
+    return (
+      <div className={styles.formContainer} style={{ width: "300px" }}>
+        <div className={styles.title}>You’re ready to go! 🚀</div>
+        <div className={styles.welcome}>A fully loaded self-service portal is now ready to deploy on your Shopify store.</div>
+
+        <div className={styles.welcome}>We’ve programmed it to follow industry best practices for shipping, return & exchange, and payment policy.</div>
+
+        <div className={styles.welcome}>You can customize these settings to fit your store policy anytime.</div>
+
+        <div className={styles.welcome}>Lastly, nothing is live until you hit “Go Live”!</div>
+        <Button onclick={() => nextStep()}>Start customizing</Button>
+      </div>
+    )
+  }
 
   return (
     <div className={styles.registerWrapper}>
@@ -364,6 +436,8 @@ const RegisterPage = () => {
           {loading ? <MockRequest /> : (step === 0 && <Step0 />)}
           {loading ? null : (step === 1 && <Step1 />)}
           {loading ? null : (step === 2 && <Step2 />)}
+          {loading ? null : (step === 3 && <Step3 />)}
+
 
 
         </div>
