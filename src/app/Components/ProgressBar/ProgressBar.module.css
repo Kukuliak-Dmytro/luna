@@ -1,0 +1,31 @@
+@media (max-width: 1067px) {
+    .wrapper {
+        margin-bottom: 20px;
+        .progressText{
+            white-space: nowrap;
+            padding-bottom: 20px;
+            font-size: 14px;
+            color: var(--text--quaternary);
+        }
+        .progressBar {
+            display: flex;
+            width: 100%;
+            border: 1px solid #C9D3E0;
+            border-radius: 4px;
+            .progressStep {
+                width: 25%;
+                height: 5px;
+                background-color: white;
+            }
+
+            .progressStep.active {
+                background-color: #C9D3E0;
+                &.lastStep {
+                    border-radius: 0px 4px 4px 0px;
+                }        
+            }
+            
+        }
+    }
+
+}

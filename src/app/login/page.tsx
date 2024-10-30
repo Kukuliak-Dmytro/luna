@@ -8,8 +8,6 @@ import Link from 'next/link';
 import useFormState from '../useFormState';
 import Image from 'next/image';
 import MockRequest from '../Components/MockRequest/MockRequest';
-import { useRouter } from 'next/navigation'; // Use 'next/router' if you're using Next.js 12
-
 const LoginPage = () => {
   const [formState, handleFormChange] = useFormState({
     email: '',
@@ -36,6 +34,10 @@ const LoginPage = () => {
         // Display a message if logged in from mobile
         setShowMobileMessage(true);
       }
+      else{
+          window.location.href='/'
+
+      }
     }
   }, [isLogged, isMobileDevice]);
 
@@ -48,7 +50,6 @@ const LoginPage = () => {
       setLoading(false);
       setIsLogged(true);
     }, 100);
-    window.location.href='/'
 
   };
   

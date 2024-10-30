@@ -10,7 +10,7 @@ import useFormState from '../useFormState';
 import Image from 'next/image';
 import MockRequest from '../Components/MockRequest/MockRequest';
 import Benefit from '../Components/Benefit/Benefit';
-
+import ProgressBar from '../Components/ProgressBar/ProgressBar';
 
 const RegisterPage = () => {
   const [step, setStep] = useState(0);
@@ -165,6 +165,7 @@ const RegisterPage = () => {
           <Image src='/logo.svg' alt='logo' width={32} height={32}></Image>
           Chad
         </div>
+        <ProgressBar currentStep={step} totalSteps={4}></ProgressBar>
         <div className={styles.title}>Welcome to Chad</div>
         <div className={styles.welcome}>Go live in 10 minutes! Our self-service widget empowers your customers to manage orders and track shipments 24/7 without driving you crazy.</div>
         <form action="" onSubmit={handleSubmit}>
@@ -216,6 +217,7 @@ const RegisterPage = () => {
             <Image src='/logo.svg' alt='logo' width={32} height={32}></Image>
             Chad
           </div>
+          <ProgressBar currentStep={step} totalSteps={4}></ProgressBar>
           <div className={styles.title}>Connect your shopify store</div>
           <div className={styles.welcome}>
             Installs the Chad widget in your Shopify store and sets it up to display your customers’ order information and self-serve options.
@@ -322,6 +324,7 @@ const RegisterPage = () => {
             <Image src='/logo.svg' alt='logo' width={32} height={32}></Image>
             Chad
           </div>
+          <ProgressBar currentStep={step} totalSteps={4}></ProgressBar>
           <div className={styles.title}>Connect your customer support email </div>
           <div className={styles.welcome}>
             Allows Chad to send automated responses on your behalf from your usual support mailbox
@@ -335,7 +338,7 @@ const RegisterPage = () => {
           <button onClick={() => handleConnectToGmail()} className={styles.connectGmail}>
             <span className={styles.googleLogo}>
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <g clip-path="url(#clip0_2499_50436)">
+              <g clipPath="url(#clip0_2499_50436)">
                 <path d="M17.8246 9.20731C17.8246 8.59552 17.775 7.98041 17.6691 7.37854H9.18005V10.8443H14.0414C13.8396 11.962 13.1915 12.9508 12.2423 13.5792V15.8279H15.1426C16.8457 14.2604 17.8246 11.9455 17.8246 9.20731Z" fill="#4285F4" />
                 <path d="M9.17995 18.0006C11.6073 18.0006 13.6543 17.2036 15.1458 15.8279L12.2455 13.5792C11.4386 14.1281 10.3969 14.439 9.18326 14.439C6.83529 14.439 4.84448 12.8549 4.13016 10.7252H1.13733V13.0434C2.66516 16.0826 5.77705 18.0006 9.17995 18.0006V18.0006Z" fill="#34A853" />
                 <path d="M4.12696 10.7252C3.74996 9.60739 3.74996 8.39703 4.12696 7.27927V4.96106H1.13743C-0.139072 7.50414 -0.139072 10.5003 1.13743 13.0434L4.12696 10.7252V10.7252Z" fill="#FBBC04" />
@@ -414,8 +417,9 @@ const RegisterPage = () => {
       setIsBackButtonEnabled(true);
     }, []);
     return (
-      <div className={styles.formContainer} style={{ width: "300px" }}>
+      <div className={styles.formContainer} >
         <div className={styles.title}>You’re ready to go! 🚀</div>
+        <ProgressBar currentStep={step} totalSteps={4}></ProgressBar>
         <div className={styles.welcome}>A fully loaded self-service portal is now ready to deploy on your Shopify store.</div>
 
         <div className={styles.welcome}>We’ve programmed it to follow industry best practices for shipping, return & exchange, and payment policy.</div>
