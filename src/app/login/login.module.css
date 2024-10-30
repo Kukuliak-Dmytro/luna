@@ -1,7 +1,50 @@
-.loginWrapper{
+.loginWrapper {
     width: 100vw;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: rgb(230, 230, 230) ;
+    .loginContainer {
+        width: 90%;
+        max-width: 400px;
+        padding: 40px;        
+        border-radius: 6px;
+        background-color: white;
+
+        .title {
+            font-size: 24px;
+            font-weight: 600;
+           margin: 16px 0px 8px;
+            display: flex;
+            align-items: center;
+            color: var(--text--primary);
+            .logo {
+                margin-right: 10px;
+            }
+        }
+
+        .welcome {
+            font-size: 14px;
+            margin-bottom: 32px;
+            color: var(--text--secondary);
+        }
+
+      
+        .misc{
+            padding-top: 24px;
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            color: var(--text--secondary);
+            .miscLink{
+                text-decoration: none;
+                color: var(--primary--color);
+                cursor: pointer;
+                &:hover{
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
 }
