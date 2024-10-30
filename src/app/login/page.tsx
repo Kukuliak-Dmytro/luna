@@ -8,6 +8,8 @@ import Link from 'next/link';
 import useFormState from '../useFormState';
 import Image from 'next/image';
 import MockRequest from '../Components/MockRequest/MockRequest';
+
+
 const LoginPage = () => {
   const [formState, handleFormChange] = useFormState({
     email: '',
@@ -16,30 +18,7 @@ const LoginPage = () => {
 
   const [loading, setLoading] = useState(false);
   const [isLogged, setIsLogged] = useState(false);
-  const [isMobileDevice, setIsMobileDevice] = useState(false);
-  const [showMobileMessage, setShowMobileMessage] = useState(false);
-
-  useEffect(() => {
-    // Check if the user is on a mobile device
-    const checkMobile = () => {
-      const mobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-      setIsMobileDevice(mobile);
-    };
-    checkMobile();
-  }, []);
-
-  useEffect(() => {
-    if (isLogged) {
-      if (isMobileDevice) {
-        // Display a message if logged in from mobile
-        setShowMobileMessage(true);
-      }
-      else{
-          window.location.href='/'
-
-      }
-    }
-  }, [isLogged, isMobileDevice]);
+  
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
@@ -50,29 +29,17 @@ const LoginPage = () => {
       setLoading(false);
       setIsLogged(true);
     }, 100);
-
   };
-  
+
+  useEffect(() => {
+    if (isLogged) {
+      // Redirect to homepage after login
+      window.location.href = '/';
+    }
+  }, [isLogged]);
 
   if (loading) {
     return <MockRequest />;
-  } else if (showMobileMessage) {
-    return (
-      <div className={styles.loginWrapper}>
-        <div className={styles.loginContainer} style={{textAlign:"center"}}>
-        <Image src='/checkmark.svg' alt='logo' width={160} height={160}></Image>
-          <div className={styles.title}>Use your desktop to access Chad</div>
-          <div className={styles.welcome}>Chad doesn’t support mobile browsers. To access your dashboard, login from your laptop or desktop computer.</div>
-          <Button onclick={()=>window.location.href='/login'}>Ok</Button>
-          <span className={styles.misc}>
-            Not {formState.email}?{' '}
-            <Link href="/login" className={styles.miscLink} onClick={()=>window.location.href='/login'}>
-              Log out
-            </Link>
-          </span>
-          </div>
-          </div>
-    );
   } else {
     return (
       <div className={styles.loginWrapper}>

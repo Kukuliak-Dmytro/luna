@@ -1,5 +1,6 @@
 @media (max-width: 1067px) {
     .wrapper {
+        display: block;
         margin-bottom: 20px;
         .progressText{
             white-space: nowrap;
@@ -28,4 +29,10 @@
         }
     }
 
+}
+@media(min-width:1068px){
+    .wrapper{
+        display: none;
+
+    }
 }

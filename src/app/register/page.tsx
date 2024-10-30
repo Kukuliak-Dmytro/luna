@@ -187,11 +187,12 @@ const RegisterPage = () => {
       console.log('Shopify connected:', platform);
     }
     useEffect(() => {
-      if (iUseShopify === true && isStoreConnected === true) {
+      if ( isStoreConnected === true) {
         setIsNextButtonEnabled(true);
       } else {
         setIsNextButtonEnabled(false);
       }
+      setIsBackButtonEnabled(false);
     }, [iUseShopify, isStoreConnected]);
 
     if (loading) {
@@ -296,7 +297,7 @@ const RegisterPage = () => {
     }
     useEffect(() => {
       setIsBackButtonEnabled(true);
-      if (iUseGmail === true && isEmailConnected === true) {
+      if ( isEmailConnected === true) {
         setIsNextButtonEnabled(true);
       } else {
         setIsNextButtonEnabled(false);
