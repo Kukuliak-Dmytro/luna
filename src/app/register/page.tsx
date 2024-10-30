@@ -58,7 +58,7 @@ const RegisterPage = () => {
     }, 500);
   };
   const handleConnectGmail = async (service: string, stopLoading: () => void) => {
-    const popup = window.open(`/popup?service=${service}`, '_blank', 'width=400,height=300');
+    const popup = window.open(`popup?service=${service}`, '_blank', 'width=400,height=300');
 
     if (!popup) {
       console.error("Failed to open popup");

@@ -46,8 +46,8 @@ const HomePage = () => {
         <div className={styles.homeContainer}>
           {/* Your homepage content for desktop users */}
           <h1>Hello, Luna Edge, my name is Dmytro!</h1>
-          <a href="login" style={{textDecoration:"solid underline"}}>Login</a><br />
-          <a href="register" style={{textDecoration:"solid underline"}}>Register</a>
+          <a href="/luna/login" style={{textDecoration:"solid underline"}}>Login</a><br />
+          <a href="/luna/register" style={{textDecoration:"solid underline"}}>Register</a>
           {/* Add your dashboard components here */}
         </div>
       </div>
