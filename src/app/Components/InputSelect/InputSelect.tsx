@@ -1,13 +1,14 @@
 import React from 'react';
-import styles from  './InputSelect.module.css';
+import styles from './InputSelect.module.css';
 
 interface InputSelectProps {
-    label: string|number;
-    options: {name:string,value:number|string}[];
+    label: string | number;
+    options: { name: string, value: number | string }[];
     id?: string;
-    onChange?: (event: any) => void;
+    onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
-const InputSelect: React.FC<InputSelectProps> = ({ label, options,id,onChange }) => {
+
+const InputSelect: React.FC<InputSelectProps> = ({ label, options, id, onChange }) => {
     return (
         <div className={styles.selectWrapper}>
             <label htmlFor={id} className={styles.label}>{label}</label>

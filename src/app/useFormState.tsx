@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { useState, ChangeEvent } from 'react';
+
+type InputChangeEvent = ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>;
 
 /**
  * Custom hook to manage form state.
  *
  * @template T - The shape of the form state object.
  * @param {T} initialState - The initial state of the form.
- * @returns {[T, (event: any) => void]} - An array containing the current form state and a change handler function.
+ * @returns {[T, (event: InputChangeEvent) => void]} - An array containing the current form state and a change handler function.
  *
  * @example
  * const [formState, handleChange] = useFormState({ name: '', email: '' });
@@ -23,27 +25,28 @@ import { useState } from 'react';
  *   onChange={handleChange}
  * />
  */
-const useFormState = <T extends Record<string, any>>(initialState: T) => {
+const useFormState = <T extends Record<string, number|string|boolean>>(initialState: T) => {
     const [formState, setFormState] = useState<T>(initialState);
 
-    const handleChange = (event: any) => {
+    const handleChange = (event: InputChangeEvent) => {
         const { id, name, value } = event.target;
         const key = name || id; // Use name if provided, otherwise use id
         setFormState((prev) => {
             const newState = {
-            ...prev,
-            [key]: value
+                ...prev,
+                [key]: value
             };
             return newState;
         });
 
         // Log the new state after it has been set
-        //for debugging purposes
+        // for debugging purposes
         // setTimeout(() => {
         //     console.log({ ...formState, [key]: value });
         // }, 0);
-        };
-        return [formState, handleChange] as const;
+    };
+
+    return [formState, handleChange] as const;
 };
 
 export default useFormState;

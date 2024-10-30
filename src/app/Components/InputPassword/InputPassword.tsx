@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import styles from './InputPassword.module.css';
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
+
 interface InputPasswordProps {
     label: string;
     id?: string;
     placeholder?: string;
     required?: boolean;
-    onChange?: (event: any) => void;
+    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const InputPassword: React.FC<InputPasswordProps> = ({ label, id, placeholder, required = true, onChange }) => {

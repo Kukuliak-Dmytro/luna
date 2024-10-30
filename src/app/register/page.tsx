@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import styles from './register.module.css';
 import InputText from '../Components/InputText/InputText';
 import InputPassword from '../Components/InputPassword/InputPassword';
@@ -148,7 +148,7 @@ const RegisterPage = () => {
       password: ''
     });
 
-    const handleSubmit = (event: any) => {
+    const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
       event.preventDefault();
       console.log("Form submitted:", formState);
       setLoading(true);
@@ -183,8 +183,14 @@ const RegisterPage = () => {
     const handleConnectToShopify = () => {
       setLoading(true);
       handleConnectShopify('Shopify', () => setLoading(false));
-      setPlatform({ target: { platformId: '[connected-shopify-account]' } });
-      console.log('Shopify connected:', platform);
+      const event = {
+        target: {
+            name: 'platformId',
+            value: '[connected-shopify-account]'
+        }
+    } as ChangeEvent<HTMLInputElement>;
+      setPlatform(event);
+      console.log('Shopify connected');
     }
     useEffect(() => {
       if ( isStoreConnected === true) {
@@ -193,7 +199,7 @@ const RegisterPage = () => {
         setIsNextButtonEnabled(false);
       }
       setIsBackButtonEnabled(false);
-    }, [iUseShopify, isStoreConnected]);
+    }, []);
 
     if (loading) {
       return <MockRequest />;
@@ -229,7 +235,7 @@ const RegisterPage = () => {
             <Benefit title='Process returns and exchanges' description='Automatically checks your store policy and existing inventory before resolving or escalating each request'></Benefit>
           </div>
           <Button onclick={() => handleConnectToShopify()}>Connect store</Button>
-          <a onClick={() => setIUseShopify(false)} className={styles.no}>I don't use Shopify</a>
+          <a onClick={() => setIUseShopify(false)} className={styles.no}>I don&apos;t use Shopify</a>
         </div>
       );
     }
@@ -246,7 +252,7 @@ const RegisterPage = () => {
           </div>
           <form
             action=""
-            onSubmit={(event: any) => {
+            onSubmit={(event: FormEvent) => {
               event.preventDefault();
               setIsStoreConnected(true);
               console.log("Form sent:", platform);
@@ -283,6 +289,7 @@ const RegisterPage = () => {
           <div className={styles.title}>Response received</div>
           <div className={styles.welcome}>Thank you for your interest in Chad! We’ll be hard at work building integrations to support your platform.</div>
           <Button onclick={() => nextStep()}>Done</Button>
+          <span className={styles.misc}>Not your store? <a onClick={() => setIsStoreConnected(false)} className={styles.miscLink}>Connect another one</a></span>
         </div>
       );
     }
@@ -291,10 +298,16 @@ const RegisterPage = () => {
     const [email, setEmail] = useFormState({ emailId: 1 });
     const handleConnectToGmail = () => {
       setLoading(true);
-      handleConnectGmail('Gmail', () => setLoading(false));
-      setEmail({ target: { platformId: '[connected-email-account]' } });
-      console.log('GMail connected:', email);
-    }
+      handleConnectGmail('Gmail', () =>{ setLoading(false);console.log('Gmail connected:', email);});
+      const event = {
+        target: {
+            id: 'emailId',
+            value: '[connected-gmail-account]'
+        }
+    } as ChangeEvent<HTMLInputElement>;
+      setEmail(event);      
+      console.log('Gmail connected');
+  }
     useEffect(() => {
       setIsBackButtonEnabled(true);
       if ( isEmailConnected === true) {
@@ -302,7 +315,7 @@ const RegisterPage = () => {
       } else {
         setIsNextButtonEnabled(false);
       }
-    }, [iUseGmail, isEmailConnected]);
+    }, []);
     if (loading) {
       return <MockRequest />;
     }
@@ -354,7 +367,7 @@ const RegisterPage = () => {
             </span>
             <span className={styles.googleText}>Connect Gmail account</span>
           </button>
-          <a onClick={() => setiUseGmail(false)} className={styles.no}>I don't use Gmail</a>
+          <a onClick={() => setiUseGmail(false)} className={styles.no}>I don&apos;t use Gmail</a>
         </div>
       );
     }
@@ -371,7 +384,7 @@ const RegisterPage = () => {
           </div>
           <form
             action=""
-            onSubmit={(event: any) => {
+            onSubmit={(event: FormEvent) => {
               event.preventDefault();
               setisEmailConnected(true);
               console.log("Form sent:", email);

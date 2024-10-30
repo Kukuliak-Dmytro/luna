@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import styles from './login.module.css';
 import InputText from '../Components/InputText/InputText';
 import InputPassword from '../Components/InputPassword/InputPassword';
@@ -20,7 +20,7 @@ const LoginPage = () => {
   const [isLogged, setIsLogged] = useState(false);
   
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     console.log('Form submitted:', formState);
     setLoading(true);
@@ -69,7 +69,7 @@ const LoginPage = () => {
             <Button>Log In</Button>
           </form>
           <span className={styles.misc}>
-            Don't have an account?{' '}
+            Don&apos;t have an account?{' '}
             <Link href="/register" className={styles.miscLink}>
               Join the waitlist
             </Link>
