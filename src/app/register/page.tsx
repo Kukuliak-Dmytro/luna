@@ -25,7 +25,7 @@ const RegisterPage = () => {
     if (step < 3) {
       setStep(prevStep => prevStep + 1);
     } else {
-      window.location.href = '/';
+      window.location.href = '/luna';
     }
   };
 
@@ -33,7 +33,7 @@ const RegisterPage = () => {
     setStep(prevStep => (prevStep > 0 ? prevStep - 1 : prevStep));
   };
   const handleConnectShopify = async (service: string, stopLoading: () => void) => {
-    const popup = window.open(`/popup?service=${service}`, '_blank', 'width=400,height=300');
+    const popup = window.open(`popup?service=${service}`, '_blank', 'width=400,height=300');
 
     if (!popup) {
       console.error("Failed to open popup");
@@ -162,7 +162,7 @@ const RegisterPage = () => {
     return (
       <div className={styles.formContainer}>
         <div className={styles.title}>
-          <Image src='/logo.svg' alt='logo' width={32} height={32}></Image>
+          <Image src='/luna/logo.svg' alt='logo' width={32} height={32}></Image>
           Chad
         </div>
         <ProgressBar currentStep={step} totalSteps={4}></ProgressBar>
@@ -207,7 +207,7 @@ const RegisterPage = () => {
     else if (iUseShopify === true && isStoreConnected === true) {
       return (
         <div className={styles.formContainer} style={{ textAlign: "center" }}>
-          <Image src='/store.svg' alt='logo' width={90} height={90}></Image>
+          <Image src='/luna/store.svg' alt='logo' width={90} height={90}></Image>
 
           <div className={styles.title}>Store connected</div>
           <div className={styles.welcome}>Chad is now able to manage customer support requests for [STORE-NAME].</div>
@@ -221,7 +221,7 @@ const RegisterPage = () => {
       return (
         <div className={styles.formContainer}>
           <div className={styles.title}>
-            <Image src='/logo.svg' alt='logo' width={32} height={32}></Image>
+            <Image src='/luna/logo.svg' alt='logo' width={32} height={32}></Image>
             Chad
           </div>
           <ProgressBar currentStep={step} totalSteps={4}></ProgressBar>
@@ -243,7 +243,7 @@ const RegisterPage = () => {
       return (
         <div className={styles.formContainer}>
           <div className={styles.title}>
-            <Image src='/logo.svg' alt='logo' width={32} height={32}></Image>
+            <Image src='/luna/logo.svg' alt='logo' width={32} height={32}></Image>
             Chad
           </div>
           <div className={styles.title}>Don’t use Shopify?</div>
@@ -285,7 +285,7 @@ const RegisterPage = () => {
 
       return (
         <div className={styles.formContainer} style={{ textAlign: "center" }}>
-          <Image src='/checkmark.svg' alt='logo' width={160} height={160}></Image>
+          <Image src='/luna/checkmark.svg' alt='logo' width={160} height={160}></Image>
           <div className={styles.title}>Response received</div>
           <div className={styles.welcome}>Thank you for your interest in Chad! We’ll be hard at work building integrations to support your platform.</div>
           <Button onclick={() => nextStep()}>Done</Button>
@@ -322,7 +322,7 @@ const RegisterPage = () => {
     else if (iUseGmail === true && isEmailConnected === true) {
       return (
         <div className={styles.formContainer} style={{ textAlign: "center" }}>
-          <Image src='/checkmark.svg' alt='logo' width={160} height={160}></Image>
+          <Image src='/luna/checkmark.svg' alt='logo' width={160} height={160}></Image>
           <div className={styles.title}>Gmail connected</div>
           <div className={styles.welcome}>Chad is now able to manage customer support requests for [STORE-NAME].</div>
           <Button onclick={() => nextStep()}>Continue</Button>
@@ -335,7 +335,7 @@ const RegisterPage = () => {
       return (
         <div className={styles.formContainer}>
           <div className={styles.title}>
-            <Image src='/logo.svg' alt='logo' width={32} height={32}></Image>
+            <Image src='/luna/logo.svg' alt='logo' width={32} height={32}></Image>
             Chad
           </div>
           <ProgressBar currentStep={step} totalSteps={4}></ProgressBar>
@@ -375,7 +375,7 @@ const RegisterPage = () => {
       return (
         <div className={styles.formContainer}>
           <div className={styles.title}>
-            <Image src='/logo.svg' alt='logo' width={32} height={32}></Image>
+            <Image src='/luna/logo.svg' alt='logo' width={32} height={32}></Image>
             Chad
           </div>
           <div className={styles.title}>Don’t use Gmail?</div>
@@ -417,7 +417,7 @@ const RegisterPage = () => {
       return (
         <div className={styles.formContainer} style={{ textAlign: "center" }}>
 
-          <Image src='/checkmark.svg' alt='logo' width={160} height={160}></Image>
+          <Image src='/luna/checkmark.svg' alt='logo' width={160} height={160}></Image>
           <div className={styles.title}>Response received</div>
           <div className={styles.welcome}>Thank you for your interest in Chad! We’ll be hard at work building integrations to support your email client.</div>
           <Button onclick={() => nextStep()}>Done</Button>

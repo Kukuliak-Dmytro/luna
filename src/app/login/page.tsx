@@ -34,7 +34,7 @@ const LoginPage = () => {
   useEffect(() => {
     if (isLogged) {
       // Redirect to homepage after login
-      window.location.href = '/';
+      window.location.href = '/luna';
     }
   }, [isLogged]);
 
@@ -45,7 +45,7 @@ const LoginPage = () => {
       <div className={styles.loginWrapper}>
         <div className={styles.loginContainer}>
           <div className={styles.title}>
-            <Image src="/logo.svg" alt="logo" width={32} height={32} />
+            <Image src="/luna/logo.svg" alt="logo" width={32} height={32} />
             Chad
           </div>
           <div className={styles.title}>Welcome back</div>
